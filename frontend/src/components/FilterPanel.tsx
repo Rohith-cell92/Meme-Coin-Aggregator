@@ -114,6 +114,25 @@ function FilterPanel({ filters, sort, onFilterChange, onSortChange }: FilterPane
             className="filter-input"
           />
         </div>
+
+        <div className="filter-group">
+          <label>Chain:</label>
+          <select
+            value={filters.chain || ''}
+            onChange={(e) => onFilterChange({ ...filters, chain: e.target.value || undefined })}
+            className="filter-select"
+          >
+            <option value="">All Chains</option>
+            <option value="solana">Solana</option>
+            <option value="ethereum">Ethereum</option>
+            <option value="bsc">BSC</option>
+            <option value="polygon">Polygon</option>
+            <option value="avalanche">Avalanche</option>
+            <option value="arbitrum">Arbitrum</option>
+            <option value="optimism">Optimism</option>
+            <option value="fantom">Fantom</option>
+          </select>
+        </div>
       </div>
 
       <div className="filter-section">

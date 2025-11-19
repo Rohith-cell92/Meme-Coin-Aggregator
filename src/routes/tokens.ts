@@ -17,6 +17,7 @@ router.get('/', async (req: Request, res: Response) => {
       ? parseFloat(req.query.minLiquidity as string)
       : undefined;
     const protocol = req.query.protocol as string | undefined;
+    const chain = req.query.chain as string | undefined;
     const sortField = (req.query.sortField as string) || 'volume';
     const sortOrder = (req.query.sortOrder as 'asc' | 'desc') || 'desc';
     const limit = req.query.limit
@@ -33,6 +34,7 @@ router.get('/', async (req: Request, res: Response) => {
     if (minVolume !== undefined) filters.minVolume = minVolume;
     if (minLiquidity !== undefined) filters.minLiquidity = minLiquidity;
     if (protocol) filters.protocol = protocol;
+    if (chain) filters.chain = chain;
 
     // Build sort options
     const sort: SortOptions = {

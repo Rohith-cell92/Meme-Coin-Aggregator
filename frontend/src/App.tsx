@@ -10,10 +10,16 @@ export interface Token {
   token_address: string;
   token_name: string;
   token_ticker: string;
+  chain?: string;
+  chain_id?: string | number;
   price_sol: number;
+  price_usd?: number;
   market_cap_sol: number;
+  market_cap_usd?: number;
   volume_sol: number;
+  volume_usd?: number;
   liquidity_sol: number;
+  liquidity_usd?: number;
   transaction_count: number;
   price_1hr_change?: number;
   price_24hr_change?: number;
@@ -40,6 +46,7 @@ export interface Filters {
   minVolume?: number;
   minLiquidity?: number;
   protocol?: string;
+  chain?: string;
 }
 
 export interface SortOptions {
@@ -78,6 +85,7 @@ function App() {
       if (filters.minVolume) params.minVolume = filters.minVolume;
       if (filters.minLiquidity) params.minLiquidity = filters.minLiquidity;
       if (filters.protocol) params.protocol = filters.protocol;
+      if (filters.chain) params.chain = filters.chain;
 
       const response = await axios.get(`${API_BASE}/api/tokens`, { params });
       

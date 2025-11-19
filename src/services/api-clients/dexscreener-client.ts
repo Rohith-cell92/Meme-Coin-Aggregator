@@ -46,19 +46,28 @@ export class DexScreenerClient extends BaseApiClient {
   }
 
   private transformPairsToTokens(pairs: DexScreenerPair[]): Token[] {
+    // Normalize SOL price for comparison (approximate 1 SOL = 100 USD)
+    const solPriceUsd = 100;
+
     return pairs
       .filter((pair) => {
-        // Filter for Solana tokens (chainId: 'solana')
-        return pair.chainId === 'solana' && pair.baseToken && pair.quoteToken;
+        // Accept all chains, just ensure we have valid token data
+        return pair.baseToken && pair.quoteToken && pair.chainId;
       })
       .map((pair) => {
-        const priceSol = parseFloat(pair.priceNative || '0');
+        const priceUsd = parseFloat(pair.priceUsd || '0');
+        const priceNative = parseFloat(pair.priceNative || '0');
         const volume24h = pair.volume?.h24 || 0;
         const liquidityUsd = pair.liquidity?.usd || 0;
         const fdv = pair.fdv || 0;
 
-        // Convert USD values to SOL (approximate 1 SOL = 100 USD)
-        const solPriceUsd = 100;
+        // For Solana, priceNative is already in SOL
+        // For other chains, convert from USD
+        let priceSol = priceNative;
+        if (pair.chainId !== 'solana' && priceUsd > 0) {
+          priceSol = priceUsd / solPriceUsd;
+        }
+
         const volumeSol = volume24h / solPriceUsd;
         const liquiditySol = liquidityUsd / solPriceUsd;
         const marketCapSol = fdv / solPriceUsd;
@@ -70,10 +79,16 @@ export class DexScreenerClient extends BaseApiClient {
           token_address: pair.baseToken.address,
           token_name: pair.baseToken.name,
           token_ticker: pair.baseToken.symbol,
+          chain: pair.chainId,
+          chain_id: pair.chainId,
           price_sol: priceSol,
+          price_usd: priceUsd,
           market_cap_sol: marketCapSol,
+          market_cap_usd: fdv,
           volume_sol: volumeSol,
+          volume_usd: volume24h,
           liquidity_sol: liquiditySol,
+          liquidity_usd: liquidityUsd,
           transaction_count: totalTransactions,
           price_1hr_change: pair.priceChange?.h1 || 0,
           price_24hr_change: pair.priceChange?.h24 || 0,

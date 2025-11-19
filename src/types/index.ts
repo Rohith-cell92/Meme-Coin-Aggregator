@@ -2,10 +2,16 @@ export interface Token {
   token_address: string;
   token_name: string;
   token_ticker: string;
-  price_sol: number;
+  chain?: string; // Chain identifier (e.g., 'ethereum', 'solana', 'bsc', 'polygon')
+  chain_id?: string | number; // Chain ID for identification
+  price_sol: number; // Price in SOL (normalized for comparison)
+  price_usd?: number; // Price in USD
   market_cap_sol: number;
+  market_cap_usd?: number;
   volume_sol: number;
+  volume_usd?: number;
   liquidity_sol: number;
+  liquidity_usd?: number;
   transaction_count: number;
   price_1hr_change?: number;
   price_24hr_change?: number;
@@ -32,6 +38,7 @@ export interface FilterOptions {
   minVolume?: number;
   minLiquidity?: number;
   protocol?: string;
+  chain?: string; // Filter by blockchain chain
 }
 
 export interface SortOptions {

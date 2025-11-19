@@ -34,8 +34,8 @@ export class AggregatorService {
         query
           ? this.dexscreener.searchTokens(query)
           : this.fetchPopularTokens(),
-        this.jupiter.searchTokens(query || 'SOL'),
-        this.geckoterminal.searchTokens(query || 'SOL'),
+        this.jupiter.searchTokens(query || ''),
+        this.geckoterminal.searchTokens(query || ''),
       ]);
 
     const allTokens: Token[] = [];
@@ -63,8 +63,8 @@ export class AggregatorService {
   }
 
   private async fetchPopularTokens(): Promise<Token[]> {
-    // Fetch popular meme coins by searching common terms
-    const queries = ['SOL', 'BONK', 'WIF', 'POPCAT', 'MYRO'];
+    // Fetch popular meme coins from all chains by searching common terms
+    const queries = ['DOGE', 'SHIB', 'PEPE', 'FLOKI', 'BONK', 'WIF', 'POPCAT'];
     const allTokens: Token[] = [];
 
     for (const query of queries) {
@@ -78,6 +78,23 @@ export class AggregatorService {
       }
     }
 
+    // Also fetch trending tokens from DexScreener (all chains)
+    try {
+      // Search for popular terms that appear across chains
+      const trendingQueries = ['USDT', 'USDC', 'BTC', 'ETH'];
+      for (const query of trendingQueries) {
+        try {
+          const tokens = await this.dexscreener.searchTokens(query);
+          allTokens.push(...tokens);
+          await new Promise((resolve) => setTimeout(resolve, 200));
+        } catch (error) {
+          logger.debug(`Error fetching trending tokens for ${query}:`, error);
+        }
+      }
+    } catch (error) {
+      logger.error('Error fetching trending tokens:', error);
+    }
+
     return allTokens;
   }
 
@@ -85,15 +102,18 @@ export class AggregatorService {
     const tokenMap = new Map<string, Token>();
 
     for (const token of tokens) {
+      // Use chain + address as unique key to handle same address on different chains
+      const chain = token.chain || 'unknown';
       const address = token.token_address.toLowerCase();
-      const existing = tokenMap.get(address);
+      const key = `${chain}:${address}`;
+      const existing = tokenMap.get(key);
 
       if (!existing) {
-        tokenMap.set(address, token);
+        tokenMap.set(key, token);
       } else {
         // Merge: prefer data from source with more complete information
         const merged = this.mergeTokenData(existing, token);
-        tokenMap.set(address, merged);
+        tokenMap.set(key, merged);
       }
     }
 
@@ -146,6 +166,9 @@ export class AggregatorService {
         return false;
       }
       if (filters.protocol && token.protocol !== filters.protocol) {
+        return false;
+      }
+      if (filters.chain && token.chain !== filters.chain) {
         return false;
       }
       if (filters.timePeriod) {

@@ -58,6 +58,13 @@
   margin-bottom: 16px;
 }
 
+.token-badges {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-end;
+}
+
 .token-info {
   flex: 1;
 }
@@ -82,6 +89,16 @@
   border-radius: 4px;
   color: #4b5563;
   font-weight: 500;
+}
+
+.token-chain {
+  font-size: 11px;
+  padding: 3px 8px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 4px;
+  color: white;
+  font-weight: 600;
+  text-transform: capitalize;
 }
 
 .token-price {

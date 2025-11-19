@@ -138,7 +138,215 @@
           }
         },
         {
-          "name": "Complex Query - Filtered, Sorted, Paginated",
+          "name": "Filter by Chain (Ethereum)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tokens?chain=ethereum&limit=20",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tokens"],
+              "query": [
+                {
+                  "key": "chain",
+                  "value": "ethereum"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Filter by Chain (Solana)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tokens?chain=solana&minVolume=1000",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tokens"],
+              "query": [
+                {
+                  "key": "chain",
+                  "value": "solana"
+                },
+                {
+                  "key": "minVolume",
+                  "value": "1000"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Filter by Time Period (1h)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tokens?timePeriod=1h&sortField=price_change&sortOrder=desc",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tokens"],
+              "query": [
+                {
+                  "key": "timePeriod",
+                  "value": "1h"
+                },
+                {
+                  "key": "sortField",
+                  "value": "price_change"
+                },
+                {
+                  "key": "sortOrder",
+                  "value": "desc"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Sort by Market Cap",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tokens?sortField=market_cap&sortOrder=desc&limit=30",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tokens"],
+              "query": [
+                {
+                  "key": "sortField",
+                  "value": "market_cap"
+                },
+                {
+                  "key": "sortOrder",
+                  "value": "desc"
+                },
+                {
+                  "key": "limit",
+                  "value": "30"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Sort by Transaction Count",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tokens?sortField=transaction_count&sortOrder=desc",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tokens"],
+              "query": [
+                {
+                  "key": "sortField",
+                  "value": "transaction_count"
+                },
+                {
+                  "key": "sortOrder",
+                  "value": "desc"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "High Volume Ethereum Tokens",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tokens?chain=ethereum&minVolume=50000&sortField=volume&sortOrder=desc",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tokens"],
+              "query": [
+                {
+                  "key": "chain",
+                  "value": "ethereum"
+                },
+                {
+                  "key": "minVolume",
+                  "value": "50000"
+                },
+                {
+                  "key": "sortField",
+                  "value": "volume"
+                },
+                {
+                  "key": "sortOrder",
+                  "value": "desc"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "24h Gainers on Solana",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tokens?chain=solana&timePeriod=24h&sortField=price_change&sortOrder=desc&limit=30",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tokens"],
+              "query": [
+                {
+                  "key": "chain",
+                  "value": "solana"
+                },
+                {
+                  "key": "timePeriod",
+                  "value": "24h"
+                },
+                {
+                  "key": "sortField",
+                  "value": "price_change"
+                },
+                {
+                  "key": "sortOrder",
+                  "value": "desc"
+                },
+                {
+                  "key": "limit",
+                  "value": "30"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "High Liquidity Tokens",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tokens?minLiquidity=10000&sortField=liquidity&sortOrder=desc",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tokens"],
+              "query": [
+                {
+                  "key": "minLiquidity",
+                  "value": "10000"
+                },
+                {
+                  "key": "sortField",
+                  "value": "liquidity"
+                },
+                {
+                  "key": "sortOrder",
+                  "value": "desc"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Complex Query - All Filters",
           "request": {
             "method": "GET",
             "header": [],
@@ -172,6 +380,23 @@
                   "value": "20"
                 }
               ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Root",
+      "item": [
+        {
+          "name": "Get API Info",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/",
+              "host": ["{{base_url}}"],
+              "path": [""]
             }
           }
         }

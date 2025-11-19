@@ -58,7 +58,12 @@ function TokenList({ tokens, loading, onLoadMore, hasMore, total }: TokenListPro
                 <h3 className="token-name">{token.token_name}</h3>
                 <span className="token-ticker">{token.token_ticker}</span>
               </div>
-              <span className="token-protocol">{token.protocol}</span>
+              <div className="token-badges">
+                {token.chain && (
+                  <span className="token-chain">{token.chain}</span>
+                )}
+                <span className="token-protocol">{token.protocol}</span>
+              </div>
             </div>
 
             <div className="token-price">
