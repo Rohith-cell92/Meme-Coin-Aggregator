@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { io, Socket } from 'socket.io-client';
+import { io } from 'socket.io-client';
 import axios from 'axios';
 import TokenList from './components/TokenList';
 import FilterPanel from './components/FilterPanel';
@@ -54,13 +54,14 @@ export interface SortOptions {
   order: 'asc' | 'desc';
 }
 
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+// Use relative URL in production, localhost in development
+const API_BASE = import.meta.env.VITE_API_URL || 
+  (import.meta.env.PROD ? '' : 'http://localhost:3000');
 
 function App() {
   const [tokens, setTokens] = useState<Token[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [socket, setSocket] = useState<Socket | null>(null);
   const [connected, setConnected] = useState(false);
   const [filters, setFilters] = useState<Filters>({});
   const [sort, setSort] = useState<SortOptions>({ field: 'volume', order: 'desc' });
@@ -150,8 +151,6 @@ function App() {
     newSocket.on('error', (error: any) => {
       console.error('WebSocket error:', error);
     });
-
-    setSocket(newSocket);
 
     return () => {
       newSocket.close();
