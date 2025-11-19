@@ -1,0 +1,189 @@
+{
+  "info": {
+    "name": "Meme Coin Aggregator API",
+    "description": "Collection for testing the Meme Coin Aggregator Service",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/health",
+              "host": ["{{base_url}}"],
+              "path": ["api", "health"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tokens",
+      "item": [
+        {
+          "name": "Get All Tokens",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tokens",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tokens"]
+            }
+          }
+        },
+        {
+          "name": "Search Tokens",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tokens?q=SOL",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tokens"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "SOL"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Tokens with Filters",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tokens?timePeriod=24h&minVolume=100&minLiquidity=50",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tokens"],
+              "query": [
+                {
+                  "key": "timePeriod",
+                  "value": "24h"
+                },
+                {
+                  "key": "minVolume",
+                  "value": "100"
+                },
+                {
+                  "key": "minLiquidity",
+                  "value": "50"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Tokens Sorted by Volume",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tokens?sortField=volume&sortOrder=desc",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tokens"],
+              "query": [
+                {
+                  "key": "sortField",
+                  "value": "volume"
+                },
+                {
+                  "key": "sortOrder",
+                  "value": "desc"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Tokens with Pagination",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tokens?limit=10&cursor=",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tokens"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "cursor",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Token by Address",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tokens/576P1t7XsRL4ZVj38LV2eYWxXRPguBADA8BxcNz1xo8y",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tokens", "576P1t7XsRL4ZVj38LV2eYWxXRPguBADA8BxcNz1xo8y"]
+            }
+          }
+        },
+        {
+          "name": "Complex Query - Filtered, Sorted, Paginated",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/tokens?q=BONK&timePeriod=1h&minVolume=500&sortField=price_change&sortOrder=desc&limit=20",
+              "host": ["{{base_url}}"],
+              "path": ["api", "tokens"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "BONK"
+                },
+                {
+                  "key": "timePeriod",
+                  "value": "1h"
+                },
+                {
+                  "key": "minVolume",
+                  "value": "500"
+                },
+                {
+                  "key": "sortField",
+                  "value": "price_change"
+                },
+                {
+                  "key": "sortOrder",
+                  "value": "desc"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ]
+}
+
