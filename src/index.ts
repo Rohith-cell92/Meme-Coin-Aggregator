@@ -15,6 +15,10 @@ import healthRouter, { setWebSocketService } from './routes/health';
 const app = express();
 const server = http.createServer(app);
 
+// Trust proxy - Required for Railway, Heroku, etc.
+// This allows express-rate-limit to correctly identify users behind proxies
+app.set('trust proxy', 1);
+
 // Middleware
 app.use(helmet({
   contentSecurityPolicy: false, // Disable for frontend assets
